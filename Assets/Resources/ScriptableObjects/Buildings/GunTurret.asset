@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb6e1ea9f3ca6744af124e4b3041d7b, type: 3}
+  m_Name: GunTurret
+  m_EditorClassIdentifier: 
+  name: Gun Turret
+  unitType: 9
+  targetUnit: 10
+  _stats:
+    Health: 100
+    Speed: 0
+    Range: 50
+    Damage: 0
+  prefab: {fileID: 846520477794257371, guid: be1424adf48b0014e8d282ce8d2d9fa1, type: 3}
