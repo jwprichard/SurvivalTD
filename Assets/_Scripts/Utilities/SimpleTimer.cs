@@ -1,12 +1,12 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace Assets.Scripts.Utilities
 {
     public class SimpleTimer : MonoBehaviour
     {
-        public delegate void EventHandler(object sender, EventArgs e);
-        public event EventHandler<EventArgs> OnTimerElapsed = delegate { };
+        public UnityAction OnTimerElapsed = delegate { };
 
         public bool isRunning;
 
@@ -47,7 +47,7 @@ namespace Assets.Scripts.Utilities
         private void TimerFinished()
         {
             isRunning = false;
-            OnTimerElapsed.Invoke(this, new EventArgs());
+            OnTimerElapsed.Invoke();
         }
     }
 

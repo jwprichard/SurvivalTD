@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 7100547002139491142}
   - component: {fileID: 7100547002139491143}
   - component: {fileID: 7100547002139491139}
-  - component: {fileID: 7100547002139491136}
+  - component: {fileID: 6957908151748382364}
   - component: {fileID: 87859455}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -103,6 +103,8 @@ MonoBehaviour:
   Scriptable: {fileID: 11400000, guid: 8187d8d82ada3ec4e90c4bf06f78d1db, type: 2}
   movementController: {fileID: 0}
   combatController: {fileID: 0}
+  SimpleTimer: {fileID: 0}
+  _onEnemyDeath: {fileID: 11400000, guid: a1a5b8bbb4611f84bbc947360689a158, type: 2}
 --- !u!114 &7100547002139491139
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -117,7 +119,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Unit: {fileID: 0}
   rotationObject: {fileID: 0}
---- !u!114 &7100547002139491136
+--- !u!114 &6957908151748382364
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,7 +128,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7100547002139491140}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 40d0cf32cc3b1164bb0d6f7bb79b0a1d, type: 3}
+  m_Script: {fileID: 11500000, guid: 43097e1f12dd81a4ea5fe35fe0d90eaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Timer: {fileID: 0}

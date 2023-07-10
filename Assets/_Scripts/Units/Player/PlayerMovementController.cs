@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Units
 {
-    public class PlayerMovementController : BaseMovementController
+    public class PlayerMovementController : MovementController
     {
         private float Horizontal = 0;
         private float Vertical = 0;

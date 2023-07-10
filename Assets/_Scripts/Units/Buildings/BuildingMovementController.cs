@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Assets.Units
 {
-    public class BuildingMovementController : BaseMovementController
+    public class BuildingMovementController : MovementController
     {
         public override void Update()
         {

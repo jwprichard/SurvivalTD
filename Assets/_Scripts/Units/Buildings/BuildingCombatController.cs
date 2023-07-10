@@ -1,35 +1,35 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Assets.Scriptables.Units;
+using System.Collections.Generic;
+using System;
 
 namespace Assets.Units
 {
-    public class BuildingCombatController : BaseCombatController
+    public class BuildingCombatController : CombatController
     {
-        private AmmunitionScriptableBase Ammunition;
+        private ProjectileScriptable Ammunition;
 
         public void Start()
         {
             Timer.Init(1, true);
-            Timer.OnTimerElapsed += (s, e) => { Attack(); };
+            Timer.OnTimerElapsed += Attack;
         }
 
         public override void Attack()
         {
-            GameObject projectile = CreateAmmo();
-
+            if (Unit.Target == null) return;
+            CreateAmmo();
         }
 
         private GameObject CreateAmmo()
         {
             GameObject projectile = Instantiate(Ammunition.prefab);
             projectile.transform.position = AttackPoint.position;
-            projectile.GetComponent<UnitBase>().SetTarget(Unit.Target);
+            projectile.GetComponent<Unit>().SetTarget(Unit.Target);
             return projectile;
         }
 
-        public void SetAmmo(AmmunitionScriptableBase Ammo)
+        public void SetAmmo(ProjectileScriptable Ammo)
         {
             Ammunition = Ammo;
         }

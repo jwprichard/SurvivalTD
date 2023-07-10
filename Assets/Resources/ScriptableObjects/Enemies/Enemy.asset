@@ -13,11 +13,13 @@ MonoBehaviour:
   m_Name: Enemy
   m_EditorClassIdentifier: 
   name: 
-  unitType: 10
-  targetUnit: 6
+  unitType: 11
+  targetUnit: 10
   _stats:
     Health: 100
     Speed: 10
     Range: 100
     Damage: 0
   prefab: {fileID: 7100547002139491140, guid: 02973fd4f5bf3cb4ca1149843d6d29a7, type: 3}
+  enemyType: 0
+  SpawnCost: 5

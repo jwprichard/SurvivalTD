@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 846520477794257375}
   - component: {fileID: 1257258069}
   - component: {fileID: 532435999}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: GunTurret
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,6 @@ MonoBehaviour:
   Scriptable: {fileID: 11400000, guid: 263095651f4f2704092e6d6ec4943f91, type: 2}
   movementController: {fileID: 0}
   combatController: {fileID: 0}
-  Ammo: {fileID: 0}
 --- !u!114 &846520477794257375
 MonoBehaviour:
   m_ObjectHideFlags: 0

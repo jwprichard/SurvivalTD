@@ -1,44 +1,49 @@
 using UnityEngine;
 using Assets.Scripts.Utilities;
+using Assets.Units;
 
 public class MapManager : Singleton<MapManager>
 {
-    private Grid<MapGridObject> _mapGrid;
-    public Grid<MapGridObject> MapGrid { get =>  _mapGrid; }
-    public void Initialize()
+    [Header("Listening To")]
+    [SerializeField] private GameStateEventChannelSO _onGameStateChange;
+
+    private Grid<MapTile> _mapGrid;
+    public Grid<MapTile> MapGrid { get =>  _mapGrid; }
+
+    private void OnEnable()
     {
-        _mapGrid = new(10, 10, 4, new(-20, -20, 0), (Grid<MapGridObject> g, int x, int y) => new MapGridObject(g, x, y), true);
+        _onGameStateChange.OnEventRaised += Initialize;
+    }
+    public void Initialize(GameState state)
+    {
+        if (state != GameState.Starting) return;
+        _mapGrid = new(10, 10, 4, new(-20, -20, 0), (Grid<MapTile> g, int x, int y) => new MapTile(g, x, y), true);
     }
 
 }
 
-public class MapGridObject
+public class MapTile
 {
-    private const int MIN = 0;
-    private const int MAX = 100;
+    private Grid<MapTile> grid;
+    private readonly int x;
+    private readonly int y;
+    private GameObject unit;
 
-    private Grid<MapGridObject> grid;
-    private int x;
-    private int y;
-    private int value = 0;
-
-    public MapGridObject(Grid<MapGridObject> grid, int x, int y)
+    public MapTile(Grid<MapTile> grid, int x, int y)
     {
         this.grid = grid;
         this.x = x;
         this.y = y;
     }
 
-    public void AddValue(int addValue)
+    public GameObject GetUnit()
     {
-        value += addValue;
-        value = Mathf.Clamp(value, MIN, MAX);
-        grid.TriggerGridObjectChanged(x, y);
+        return unit;
     }
 
-    public float GetValueNormalized()
+    public void SetUnit(GameObject unit)
     {
-        return (float)value / MAX;
+        this.unit = unit;
     }
 
     public Vector3 GetCenterPosition()

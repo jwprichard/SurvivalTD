@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dbb6e1ea9f3ca6744af124e4b3041d7b, type: 3}
+  m_Name: Base
+  m_EditorClassIdentifier: 
+  name: Base
+  unitType: 10
+  targetUnit: 11
+  _stats:
+    Health: 500
+    Speed: 0
+    Range: 0
+    Damage: 0
+  prefab: {fileID: 2279868559079411977, guid: 5db79e4066cda9d4bb665709a8ba3487, type: 3}
+  DefaultAmmo: {fileID: 0}
+  buildingType: 0
