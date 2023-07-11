@@ -16,8 +16,9 @@ public class MapManager : Singleton<MapManager>
     }
     public void Initialize(GameState state)
     {
-        if (state != GameState.Starting) return;
+        if (state != GameState.Initialise) return;
         _mapGrid = new(10, 10, 4, new(-20, -20, 0), (Grid<MapTile> g, int x, int y) => new MapTile(g, x, y), true);
+
     }
 
 }

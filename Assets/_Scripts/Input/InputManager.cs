@@ -15,11 +15,11 @@ public class InputManager : Singleton<InputManager>
 
     private void OnEnable()
     {
-        _inputReader.InteractEvent += OnInterationButtonPress;
+        _inputReader.InteractEvent += OnInteractionButtonPressed;
         currentInteractionType = InteractionType.Build;
     }
 
-    private void OnInterationButtonPress()
+    private void OnInteractionButtonPressed()
     {
 
         switch (currentInteractionType)

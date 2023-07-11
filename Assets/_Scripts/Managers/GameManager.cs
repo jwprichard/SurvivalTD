@@ -11,17 +11,15 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Listening to")]
     [SerializeField] private RoundTimerEventChannelSO _onRoundStart = default;
-    [SerializeField] private BuildingEventChannelSO _onBuild = default;
 
     public GameState State { get; private set; }
 
     private void OnEnable()
     {
         _onRoundStart.OnEventRaised += StartRound;
-        //_onBuild.OnBuild += { }
     }
 
-    private void Start() => ChangeState(GameState.Starting);
+    private void Start() => ChangeState(GameState.Initialise);
 
     public void ChangeState(GameState newState)
     {
@@ -30,31 +28,39 @@ public class GameManager : Singleton<GameManager>
         State = newState;
         switch (newState)
         {
+            case GameState.Initialise:
+                Debug.Log("Initialising...");
+                HandleInitialise();
+                break;
             case GameState.Starting:
                 Debug.Log("Starting...");
                 HandleStarting();
                 break;
-            case GameState.BeforeWave:
-                Debug.Log("BeforeWave...");
-                HandleBeforeWave();
-                break;
-            case GameState.Wave:
-                Debug.Log("Wave...");
-                break;
-            case GameState.Upgrade:
-                break;
-            case GameState.Finish:
-                HandleFinish();
-                break;
+            //case GameState.BeforeWave:
+            //    Debug.Log("BeforeWave...");
+            //    HandleBeforeWave();
+            //    break;
+            //case GameState.Wave:
+            //    Debug.Log("Wave...");
+            //    break;
+            //case GameState.Upgrade:
+            //    break;
+            //case GameState.Finish:
+            //    HandleFinish();
+            //    break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(State), newState, null);
         }
     }
 
+    private void HandleInitialise()
+    {
+        ChangeState(GameState.Starting);
+    }
+
     private void HandleStarting()
     {
-        BuildingManager.Instance.ChangeState(BuildState.Building);
-        BuildingManager.Instance.SetBuilding(BuildingType.Base);
+        // Pass
     }
 
     private void HandleBeforeWave()
@@ -85,6 +91,7 @@ public class GameManager : Singleton<GameManager>
 [Serializable]
 public enum GameState
 {
+    Initialise,
     Starting,
     BeforeWave,
     Wave,
