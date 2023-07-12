@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Assets.Scripts.Utilities;
 using Assets.Scriptables.Units;
+using Unity.VisualScripting;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -11,12 +12,14 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Listening to")]
     [SerializeField] private RoundTimerEventChannelSO _onRoundStart = default;
+    [SerializeField] private BuildingEventChannelSO _onBuildingBuilt = default;
 
     public GameState State { get; private set; }
 
     private void OnEnable()
     {
         _onRoundStart.OnEventRaised += StartRound;
+        _onBuildingBuilt.OnBuild += HandleBuildingBuilt;
     }
 
     private void Start() => ChangeState(GameState.Initialise);
@@ -36,13 +39,13 @@ public class GameManager : Singleton<GameManager>
                 Debug.Log("Starting...");
                 HandleStarting();
                 break;
-            //case GameState.BeforeWave:
-            //    Debug.Log("BeforeWave...");
-            //    HandleBeforeWave();
-            //    break;
-            //case GameState.Wave:
-            //    Debug.Log("Wave...");
-            //    break;
+            case GameState.Preparation:
+                Debug.Log("Preparation...");
+                HandlePreparation();
+                break;
+            case GameState.Wave:
+                Debug.Log("Wave...");
+                break;
             //case GameState.Upgrade:
             //    break;
             //case GameState.Finish:
@@ -51,6 +54,12 @@ public class GameManager : Singleton<GameManager>
             default:
                 throw new ArgumentOutOfRangeException(nameof(State), newState, null);
         }
+    }
+
+    private void HandleBuildingBuilt(BuildingType buildingType)
+    {
+        if (!buildingType.Equals(BuildingType.Base)) return;
+        ChangeState(GameState.Preparation);
     }
 
     private void HandleInitialise()
@@ -63,15 +72,15 @@ public class GameManager : Singleton<GameManager>
         // Pass
     }
 
-    private void HandleBeforeWave()
+    private void HandlePreparation()
     {
-        BuildingManager.Instance.ChangeState(BuildState.Building);
-        BuildingManager.Instance.SetBuilding(BuildingType.GunTurret);
+        //BuildingManager.Instance.ChangeState(BuildState.Building);
+        //BuildingManager.Instance.SetBuilding(BuildingType.GunTurret);
     }
 
     private void HandleWave()
     {
-        EnemyManager.Instance.ChangeState(SpawnState.Spawning);
+        //EnemyManager.Instance.ChangeState(SpawnState.Spawning);
     }
 
     private void HandleUpgrade()
@@ -93,7 +102,7 @@ public enum GameState
 {
     Initialise,
     Starting,
-    BeforeWave,
+    Preparation,
     Wave,
     Upgrade,
     Finish,

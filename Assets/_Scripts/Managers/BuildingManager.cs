@@ -44,7 +44,7 @@ public class BuildingManager : Singleton<BuildingManager>
     // Builds a specific building by passing in a BuildingType building
     public void BuildAction(BuildingType building)
     {
-        BuildingGO = Instantiate(ResourceSystem.Instance.GetBuilding(Building).prefab);
+        BuildingGO = Instantiate(ResourceSystem.Instance.GetBuilding(building).prefab);
 
         MapTile tile = MapManager.Instance.MapGrid.GetGridObject(InputUtilities.GetMouseWorldPosition());
 
@@ -60,7 +60,7 @@ public class BuildingManager : Singleton<BuildingManager>
         }
         BuildingGO.GetComponent<Unit>().Active = true;
         tile.SetUnit(BuildingGO);
-        _onBuild.OnBuild(Building);
+        _onBuild.OnBuild(building);
     }
 
 }

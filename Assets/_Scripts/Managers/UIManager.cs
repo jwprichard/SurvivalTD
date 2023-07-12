@@ -29,11 +29,11 @@ public class UIManager : MonoBehaviour
 
     private void StartTimer(GameState state)
     {
-        if (state != GameState.BeforeWave) return;
+        if (state != GameState.Preparation) return;
         TextTimer.enabled = true;
         Timer.Init(2f);
     }
-
+    
     private void RoundStart()
     {
         _onRoundTimerElapsed.RaiseEvent();
