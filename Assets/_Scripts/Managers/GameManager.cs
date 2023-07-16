@@ -9,17 +9,20 @@ public class GameManager : Singleton<GameManager>
 {
     [Header("Broadcasting on")]
     [SerializeField] private GameStateEventChannelSO _onGameStateChange = default;
+    [SerializeField] private BuildingEventChannelSO _onBuildingEvent = default;
 
     [Header("Listening to")]
     [SerializeField] private RoundTimerEventChannelSO _onRoundStart = default;
     [SerializeField] private BuildingEventChannelSO _onBuildingBuilt = default;
+    //[SerializeField] private EnemyManagerStateECSO _onEnemyStateChange = default;
 
     public GameState State { get; private set; }
 
     private void OnEnable()
     {
-        _onRoundStart.OnEventRaised += StartRound;
+        _onRoundStart.OnEventRaised += HandleRoundStart;
         _onBuildingBuilt.OnBuild += HandleBuildingBuilt;
+        //_onEnemyStateChange.OnEventRaised += HandleEnemyStateChange;
     }
 
     private void Start() => ChangeState(GameState.Initialise);
@@ -46,22 +49,31 @@ public class GameManager : Singleton<GameManager>
             case GameState.Wave:
                 Debug.Log("Wave...");
                 break;
-            //case GameState.Upgrade:
-            //    break;
-            //case GameState.Finish:
-            //    HandleFinish();
-            //    break;
+            case GameState.Finish:
+                Debug.Log("Wave...");
+                HandleFinish();
+                break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(State), newState, null);
         }
     }
 
+    // Event Handlers
     private void HandleBuildingBuilt(BuildingType buildingType)
     {
         if (!buildingType.Equals(BuildingType.Base)) return;
         ChangeState(GameState.Preparation);
     }
 
+    //private void HandleEnemyStateChange(EnemyManagerState enemyState)
+    //{
+    //    if (!enemyState.Equals(EnemyManagerState.Finished)) return;
+    //    ChangeState(GameState.Preparation);
+    //}
+
+    public void HandleRoundStart(GameState gameState) => ChangeState(gameState);
+
+    // State Handlers
     private void HandleInitialise()
     {
         ChangeState(GameState.Starting);
@@ -69,31 +81,23 @@ public class GameManager : Singleton<GameManager>
 
     private void HandleStarting()
     {
-        // Pass
+        _onBuildingEvent.RaiseBuildingChangeEvent(BuildingType.Base);
     }
 
     private void HandlePreparation()
     {
-        //BuildingManager.Instance.ChangeState(BuildState.Building);
-        //BuildingManager.Instance.SetBuilding(BuildingType.GunTurret);
+        // Pass
     }
 
     private void HandleWave()
     {
-        //EnemyManager.Instance.ChangeState(SpawnState.Spawning);
-    }
-
-    private void HandleUpgrade()
-    {
-        //Nothing
+        // Pass
     }
 
     private void HandleFinish()
     {
         //Nothing
     }
-
-    public void StartRound() => ChangeState(GameState.Wave);
 
 }
 

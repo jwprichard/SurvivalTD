@@ -21,6 +21,7 @@ namespace Assets.Units
         {
             if (collision.gameObject.TryGetComponent(out CombatController bcc))
             {
+                if (Target == null) return;
                 if (bcc.Unit.gameObject.layer == Target.gameObject.layer)
                 {
                     bcc.TakeDamage(Stats.Damage);

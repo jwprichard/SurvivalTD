@@ -11,8 +11,8 @@ namespace Assets.Scripts.Utilities
         public bool isRunning;
 
         public bool autoReset;
-        public float timer;
-        public float time;
+        public float Timer { get; private set; }
+        public float Time { get; private set; }
 
         protected void OnApplicationQuit()
         {
@@ -21,8 +21,8 @@ namespace Assets.Scripts.Utilities
 
         public virtual void Init(float time, bool autoReset = false)
         {
-            timer = time;
-            this.time = timer;
+            Timer = time;
+            this.Time = Timer;
             isRunning = true;
             this.autoReset = autoReset;
         }
@@ -31,13 +31,13 @@ namespace Assets.Scripts.Utilities
         {
             if (isRunning)
             {
-                time -= Time.deltaTime;
-                if (time < 0 && isRunning)
+                Time -= UnityEngine.Time.deltaTime;
+                if (Time < 0 && isRunning)
                 {
                     TimerFinished();
                     if (autoReset)
                     {
-                        time = timer;
+                        Time = Timer;
                         isRunning = true;
                     }
                 }
@@ -53,14 +53,15 @@ namespace Assets.Scripts.Utilities
 
     public class AttackTimer : SimpleTimer
     {
+        public new float Timer { get; private set; }
         public override void Init(float aps, bool autoReset = false)
         {
             // This returns attack speed in attacks per second. e.i. if the attack rate is 2 attacks per second
-            // the timer will result to 0.5s which is 2 attcks per second.
-            timer = 1/ aps;
-            this.time = timer;
-            isRunning = true;
-            this.autoReset = autoReset;
+            // the timer will result to 0.5s which is 2 attacks per second.
+            Timer = 1 / aps;
+
+            base.Init(Timer, autoReset);
+
         }
     }
 }

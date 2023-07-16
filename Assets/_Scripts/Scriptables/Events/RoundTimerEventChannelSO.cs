@@ -4,10 +4,10 @@ using UnityEngine.Events;
 [CreateAssetMenu(menuName = "Events/Buildings/Round Timer Event Channel")]
 public class RoundTimerEventChannelSO : ScriptableObject
 {
-    public UnityAction OnEventRaised = delegate { };
+    public UnityAction<GameState> OnEventRaised = delegate { };
 
-    public void RaiseEvent()
+    public void RaiseEvent(GameState gameState)
     {
-        OnEventRaised.Invoke();
+        OnEventRaised.Invoke(gameState);
     }
 }
