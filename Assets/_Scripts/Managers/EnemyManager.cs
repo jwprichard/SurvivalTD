@@ -34,7 +34,7 @@ public class EnemyManager : Singleton<EnemyManager>
         spawnController.name = "SpawnController";
         spawnController.transform.parent = transform;
         spawnControllers[0] = spawnController.AddComponent<SpawnController>();
-        spawnControllers[0].Init(10, 2);
+        spawnControllers[0].Init(100, 0.5f);
     }
 
     private void StartSpawners()

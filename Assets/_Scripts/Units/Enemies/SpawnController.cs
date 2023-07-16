@@ -14,13 +14,13 @@ public class SpawnController : MonoBehaviour
 
     private List<Enemy> Enemies;
 
-    private int SpawnFrequency;
-    private int MaxSpawnPoints;
-    private int CurrentSpawnPoints;
+    private float SpawnFrequency;
+    [SerializeField] private float MaxSpawnPoints;
+    private float CurrentSpawnPoints;
 
-    public void Init(int maxSpawnPoints, int spawnFrequency)
+    public void Init(int initialMaxSpawnPoints, float spawnFrequency)
     {
-        MaxSpawnPoints = maxSpawnPoints;
+        MaxSpawnPoints = initialMaxSpawnPoints;
         SpawnFrequency = spawnFrequency;
         Enemies = new();
         SetupTimer();
@@ -45,6 +45,10 @@ public class SpawnController : MonoBehaviour
                 CurrentSpawnPoints = MaxSpawnPoints;
                 spawnTimer.Init(SpawnFrequency);
                 break;
+            case SpawnState.ReConfig:
+                HandleReconfiguration();
+                ChangeState(SpawnState.Idle);
+                break;
             case SpawnState.Idle: break;
             default:
                 throw new ArgumentOutOfRangeException("State is out of range.");
@@ -57,10 +61,15 @@ public class SpawnController : MonoBehaviour
         StartCoroutine(Spawn());
         if (CurrentSpawnPoints <= 0)
         {
-            ChangeState(SpawnState.Idle);
+            ChangeState(SpawnState.ReConfig);
             return;
         }
         spawnTimer.Init(SpawnFrequency);
+    }
+
+    private void HandleReconfiguration()
+    {
+        MaxSpawnPoints *= VariableManager.SpawnPointMultiplier;
     }
 
     private IEnumerator Spawn()
@@ -69,8 +78,8 @@ public class SpawnController : MonoBehaviour
         for (int i = 0; i < 100; i++)
         {
             randomPos =
-            new(UnityEngine.Random.Range(-VariableManager.Instance.Width * 3, VariableManager.Instance.Width * 3),
-                UnityEngine.Random.Range(-VariableManager.Instance.Height * 3, VariableManager.Instance.Height * 3));
+            new(UnityEngine.Random.Range(-VariableManager.Width * 3, VariableManager.Width * 3),
+                UnityEngine.Random.Range(-VariableManager.Height * 3, VariableManager.Height * 3));
 
             if (CheckBuildingDistance(randomPos))
             {
@@ -104,6 +113,7 @@ public class SpawnController : MonoBehaviour
 public enum SpawnState
 {
     Spawning = 0,
-    Idle = 1,
+    ReConfig = 1,
+    Idle = 2,
 }
 

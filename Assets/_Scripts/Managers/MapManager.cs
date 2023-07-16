@@ -16,10 +16,10 @@ public class MapManager : Singleton<MapManager>
     }
     public void Initialize(GameState state)
     {
-        VariableManager.Instance.Height = 10;
-        VariableManager.Instance.Width = 10;
+        VariableManager.Height = 10;
+        VariableManager.Width = 10;
         if (state != GameState.Initialise) return;
-        _mapGrid = new(VariableManager.Instance.Width, VariableManager.Instance.Height, 4, new(-20, -20, 0), (Grid<MapTile> g, int x, int y) => new MapTile(g, x, y), true);
+        _mapGrid = new(VariableManager.Width, VariableManager.Height, 4, new(-20, -20, 0), (Grid<MapTile> g, int x, int y) => new MapTile(g, x, y), true);
     }
 
 }
