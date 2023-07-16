@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using Assets.Scripts.Utilities;
 using Assets.Scriptables.Units;
+using Unity.VisualScripting;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -11,17 +12,17 @@ public class GameManager : Singleton<GameManager>
 
     [Header("Listening to")]
     [SerializeField] private RoundTimerEventChannelSO _onRoundStart = default;
-    [SerializeField] private BuildingEventChannelSO _onBuild = default;
+    [SerializeField] private BuildingEventChannelSO _onBuildingBuilt = default;
 
     public GameState State { get; private set; }
 
     private void OnEnable()
     {
         _onRoundStart.OnEventRaised += StartRound;
-        //_onBuild.OnBuild += { }
+        _onBuildingBuilt.OnBuild += HandleBuildingBuilt;
     }
 
-    private void Start() => ChangeState(GameState.Starting);
+    private void Start() => ChangeState(GameState.Initialise);
 
     public void ChangeState(GameState newState)
     {
@@ -30,42 +31,56 @@ public class GameManager : Singleton<GameManager>
         State = newState;
         switch (newState)
         {
+            case GameState.Initialise:
+                Debug.Log("Initialising...");
+                HandleInitialise();
+                break;
             case GameState.Starting:
                 Debug.Log("Starting...");
                 HandleStarting();
                 break;
-            case GameState.BeforeWave:
-                Debug.Log("BeforeWave...");
-                HandleBeforeWave();
+            case GameState.Preparation:
+                Debug.Log("Preparation...");
+                HandlePreparation();
                 break;
             case GameState.Wave:
                 Debug.Log("Wave...");
                 break;
-            case GameState.Upgrade:
-                break;
-            case GameState.Finish:
-                HandleFinish();
-                break;
+            //case GameState.Upgrade:
+            //    break;
+            //case GameState.Finish:
+            //    HandleFinish();
+            //    break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(State), newState, null);
         }
     }
 
-    private void HandleStarting()
+    private void HandleBuildingBuilt(BuildingType buildingType)
     {
-        BuildingManager.Instance.ChangeState(BuildState.Building);
-        BuildingManager.Instance.SetBuilding(BuildingType.Base);
+        if (!buildingType.Equals(BuildingType.Base)) return;
+        ChangeState(GameState.Preparation);
     }
 
-    private void HandleBeforeWave()
+    private void HandleInitialise()
     {
-        BuildingManager.Instance.ChangeState(BuildState.Building);
-        BuildingManager.Instance.SetBuilding(BuildingType.GunTurret);
+        ChangeState(GameState.Starting);
+    }
+
+    private void HandleStarting()
+    {
+        // Pass
+    }
+
+    private void HandlePreparation()
+    {
+        //BuildingManager.Instance.ChangeState(BuildState.Building);
+        //BuildingManager.Instance.SetBuilding(BuildingType.GunTurret);
     }
 
     private void HandleWave()
     {
-        EnemyManager.Instance.ChangeState(SpawnState.Spawning);
+        //EnemyManager.Instance.ChangeState(SpawnState.Spawning);
     }
 
     private void HandleUpgrade()
@@ -85,8 +100,9 @@ public class GameManager : Singleton<GameManager>
 [Serializable]
 public enum GameState
 {
+    Initialise,
     Starting,
-    BeforeWave,
+    Preparation,
     Wave,
     Upgrade,
     Finish,

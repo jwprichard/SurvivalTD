@@ -4,6 +4,7 @@ using UnityEngine;
 using Assets.Scriptables.Units;
 using Assets.Scripts.Utilities;
 using Assets.Units;
+using System.Threading.Tasks;
 
 public class BuildingManager : Singleton<BuildingManager>
 {
@@ -11,6 +12,7 @@ public class BuildingManager : Singleton<BuildingManager>
     [SerializeField] private BuildingEventChannelSO _onBuild = default;
 
     [Header("Listening to")]
+    [SerializeField] private GameStateEventChannelSO _onGameStateChange = default;
     [SerializeField] private BuildingEventChannelSO _onBuildInteract = default;
 
     [SerializeField] private BuildingType Building;
@@ -20,34 +22,29 @@ public class BuildingManager : Singleton<BuildingManager>
 
     private void OnEnable()
     {
-        _onBuildInteract.OnBuildInteract += Build;
-    }
-
-    public void Update()
-    { 
-        CheckState(); 
+        _onBuildInteract.OnBuildInteract += HandleBuildInteractionEvent;
+        _onGameStateChange.OnEventRaised += HandleGameStateChange;
     }
 
     public void ChangeState(BuildState newState) => State = newState;
 
     public void SetBuilding(BuildingType building) => Building = building;
 
-    private void CheckState()
+    private void HandleBuildInteractionEvent()
     {
-        switch (State)
-        {
-            case BuildState.Building:
-                break;
-            case BuildState.Idle:
-                break;
-            default:
-                throw new ArgumentOutOfRangeException("State is out of range.");
-        }
+       BuildAction(Building);
     }
 
-    public void Build()
+    private void HandleGameStateChange(GameState gameState)
     {
-        BuildingGO = Instantiate(ResourceSystem.Instance.GetBuilding(Building).prefab);
+        if (!gameState.Equals(GameState.Starting)) return;
+        SetBuilding(BuildingType.Base);
+    }
+
+    // Builds a specific building by passing in a BuildingType building
+    public void BuildAction(BuildingType building)
+    {
+        BuildingGO = Instantiate(ResourceSystem.Instance.GetBuilding(building).prefab);
 
         MapTile tile = MapManager.Instance.MapGrid.GetGridObject(InputUtilities.GetMouseWorldPosition());
 
@@ -63,13 +60,14 @@ public class BuildingManager : Singleton<BuildingManager>
         }
         BuildingGO.GetComponent<Unit>().Active = true;
         tile.SetUnit(BuildingGO);
-        _onBuild.OnBuild(Building);
+        _onBuild.OnBuild(building);
     }
 
 }
 
 public enum BuildState
 {
+    GameStart,
     Building,
     Idle,
 }

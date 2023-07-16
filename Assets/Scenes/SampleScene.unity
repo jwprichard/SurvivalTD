@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.549257, g: 0.78058803, b: 0.77652794, a: 1}
+  m_IndirectSpecularColor: {r: 0.5490802, g: 0.78049076, b: 0.77669203, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -57256,8 +57256,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputReader: {fileID: 11400000, guid: bba6dedd1f1e80d46a161f70377aaf04, type: 2}
-  _onBuildInteract: {fileID: 0}
-  _onSelect: {fileID: 0}
+  _onBuildInteract: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
+  _onSelect: {fileID: 11400000, guid: 8561c3df76e421749a913a6d3e409c1b, type: 2}
   currentInteractionType: 2
 --- !u!4 &572159902
 Transform:
@@ -57611,8 +57611,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9695d666d3faf694686529deacb3579e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onBuild: {fileID: 0}
-  _onBuildInteract: {fileID: 0}
+  _onBuild: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
+  _onGameStateChange: {fileID: 11400000, guid: 94b990d6067e2e74e9de445d13718985, type: 2}
+  _onBuildInteract: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
   Building: 0
   State: 0
 --- !u!1 &1018179408
@@ -58048,9 +58049,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0780fa6837d36047b2efe1092c1fa97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _onBeforeGameStateChange: {fileID: 11400000, guid: 94b990d6067e2e74e9de445d13718985, type: 2}
+  _onGameStateChange: {fileID: 11400000, guid: 94b990d6067e2e74e9de445d13718985, type: 2}
   _onRoundStart: {fileID: 11400000, guid: 134a3255342a5284c9fd1a1a95993027, type: 2}
-  _onBuild: {fileID: 0}
+  _onBuildingBuilt: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
 --- !u!4 &2080591941
 Transform:
   m_ObjectHideFlags: 0
