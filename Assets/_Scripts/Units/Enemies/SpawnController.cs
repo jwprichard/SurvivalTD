@@ -2,6 +2,7 @@
 using Assets.Scripts.Utilities;
 using Assets.Units;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ public class SpawnController : MonoBehaviour
 
     private void HandleSpawning()
     {
-        Spawn();
+        StartCoroutine(Spawn());
         if (CurrentSpawnPoints <= 0)
         {
             ChangeState(SpawnState.Idle);
@@ -62,16 +63,40 @@ public class SpawnController : MonoBehaviour
         spawnTimer.Init(SpawnFrequency);
     }
 
-    private void Spawn()
+    private IEnumerator Spawn()
     {
+        Vector2 randomPos = new();
+        for (int i = 0; i < 100; i++)
+        {
+            randomPos =
+            new(UnityEngine.Random.Range(-VariableManager.Instance.Width * 3, VariableManager.Instance.Width * 3),
+                UnityEngine.Random.Range(-VariableManager.Instance.Height * 3, VariableManager.Instance.Height * 3));
 
-        Vector2 randomPos =
-            new(UnityEngine.Random.Range(-VariableManager.Instance.Width, VariableManager.Instance.Width),
-                UnityEngine.Random.Range(-VariableManager.Instance.Height, VariableManager.Instance.Height));
+            if (CheckBuildingDistance(randomPos))
+            {
+                Debug.Log("Spawn calculated in " + i + " tries.");
+                break; 
+            }
+            if (i == 99)
+            {
+                Debug.Log("Hit maximum retry, not spawning enemy!");
+                yield return null;
+            }
+        }
+
         GameObject enemy = Instantiate(ResourceSystem.Instance.GetEnemy(EnemyType.eye).prefab);
         Enemies.Add(enemy.GetComponent<Enemy>());
         CurrentSpawnPoints -= enemy.GetComponent<Enemy>().Scriptable.SpawnCost;
         enemy.transform.position = randomPos;
+        yield return null;
+    }
+
+    private bool CheckBuildingDistance(Vector2 position)
+    {
+        Transform building = GameObjectUtilities.FindTransformInDistance(position, (int)UnitType.Building, 20);
+
+        if (building != null)  return false; 
+        return true;
     }
 
 }

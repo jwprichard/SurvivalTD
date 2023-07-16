@@ -45,27 +45,7 @@ namespace Assets.Units
 
         public virtual void FindTarget()
         {
-            float minDistance = int.MaxValue;
-            Vector2 position = gameObject.transform.position;
-            Transform target = null;
-
-            Collider2D[] collisions = Physics2D.OverlapCircleAll(position, Unit.Stats.Range, 1 << (int) Unit.Scriptable.targetUnit);
-            if (collisions.Length > 0)
-            {
-                foreach (Collider2D collision in collisions)
-                {
-                    if (!collision.gameObject.GetComponent<Unit>().Active) {  }
-                    else
-                    {
-                        float newDistance = Vector2.Distance(position, collision.transform.position);
-                        if (newDistance < minDistance)
-                        {
-                            minDistance = newDistance;
-                            target = collision.transform;
-                        }
-                    }
-                }
-            }
+            Transform target = GameObjectUtilities.FindTransformInDistance(transform, (int)Unit.Scriptable.targetUnit, Unit.Stats.Range);
 
             if (target != null)
             {
