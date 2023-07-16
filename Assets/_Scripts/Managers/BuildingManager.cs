@@ -13,7 +13,7 @@ public class BuildingManager : Singleton<BuildingManager>
 
     [Header("Listening to")]
     [SerializeField] private GameStateEventChannelSO _onGameStateChange = default;
-    [SerializeField] private BuildingEventChannelSO _onBuildInteract = default;
+    [SerializeField] private BuildingEventChannelSO _onBuildingEvent = default;
 
     [SerializeField] private BuildingType Building;
     private GameObject BuildingGO;
@@ -22,7 +22,8 @@ public class BuildingManager : Singleton<BuildingManager>
 
     private void OnEnable()
     {
-        _onBuildInteract.OnBuildInteract += HandleBuildInteractionEvent;
+        _onBuildingEvent.OnBuildInteract += HandleBuildInteractionEvent;
+        _onBuildingEvent.OnBuildingChange += SetBuilding;
         _onGameStateChange.OnEventRaised += HandleGameStateChange;
     }
 
@@ -37,8 +38,8 @@ public class BuildingManager : Singleton<BuildingManager>
 
     private void HandleGameStateChange(GameState gameState)
     {
-        if (!gameState.Equals(GameState.Starting)) return;
-        SetBuilding(BuildingType.Base);
+        if (!gameState.Equals(GameState.Preparation)) return;
+        SetBuilding(BuildingType.GunTurret);
     }
 
     // Builds a specific building by passing in a BuildingType building
@@ -58,7 +59,7 @@ public class BuildingManager : Singleton<BuildingManager>
             Debug.Log("Building already exists!");
             return;
         }
-        BuildingGO.GetComponent<Unit>().Active = true;
+        //BuildingGO.GetComponent<Unit>().Active = true;
         tile.SetUnit(BuildingGO);
         _onBuild.OnBuild(building);
     }

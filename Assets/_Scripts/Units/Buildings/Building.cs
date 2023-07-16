@@ -9,7 +9,7 @@ namespace Assets.Units
         
         public void Start()
         {
-            Active = false;
+            //Active = false;
             // Set the ammo for the combat controller
             if (Scriptable != null) BuildingCombatController.SetAmmo(Scriptable.DefaultAmmo);
         }

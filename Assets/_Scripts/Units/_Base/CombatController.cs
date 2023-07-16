@@ -20,7 +20,7 @@ namespace Assets.Units
 
         public virtual void Update()
         {
-            // If the unit's combat activity is diabled.
+            // If the unit's combat activity is disabled.
             if (!Unit.Active) return;
             FindTarget();
             CheckStats();

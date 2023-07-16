@@ -7,7 +7,7 @@ namespace Assets.Units
     public class Unit : MonoBehaviour
     {
         [SerializeField] public virtual UnitStats Stats { get; private set; }
-        [HideInInspector] public Transform Target { get; private set; }
+        [SerializeField] public Transform Target { get; private set; }
         [SerializeField] public UnitScriptable Scriptable;
         [HideInInspector] public MovementController movementController;
         [HideInInspector] public CombatController combatController;
