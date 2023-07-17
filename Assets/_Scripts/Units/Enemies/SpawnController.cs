@@ -74,7 +74,23 @@ public class SpawnController : MonoBehaviour
 
     private IEnumerator Spawn()
     {
-        Vector2 randomPos = new();
+        if (!CalculateSpawnLocation(out Vector2 randomPos)) yield return null;
+
+        GameObject enemy = ChooseEnemyType();
+        Enemies.Add(enemy.GetComponent<Enemy>());
+        CurrentSpawnPoints -= enemy.GetComponent<Enemy>().Scriptable.SpawnCost;
+        enemy.transform.position = randomPos;
+        yield return null;
+    }
+    private GameObject ChooseEnemyType()
+    {
+        int num = UnityEngine.Random.Range(0, 3);
+        EnemyType enemyType = (EnemyType)num;
+        return Instantiate(ResourceSystem.Instance.GetEnemy(enemyType).prefab);
+    }
+
+    private bool CalculateSpawnLocation(out Vector2 randomPos)
+    {
         for (int i = 0; i < 100; i++)
         {
             randomPos =
@@ -84,20 +100,13 @@ public class SpawnController : MonoBehaviour
             if (CheckBuildingDistance(randomPos))
             {
                 Debug.Log("Spawn calculated in " + i + " tries.");
-                break; 
-            }
-            if (i == 99)
-            {
-                Debug.Log("Hit maximum retry, not spawning enemy!");
-                yield return null;
+                return true;
             }
         }
 
-        GameObject enemy = Instantiate(ResourceSystem.Instance.GetEnemy(EnemyType.eye).prefab);
-        Enemies.Add(enemy.GetComponent<Enemy>());
-        CurrentSpawnPoints -= enemy.GetComponent<Enemy>().Scriptable.SpawnCost;
-        enemy.transform.position = randomPos;
-        yield return null;
+        Debug.Log("Hit maximum retry, not spawning enemy!");
+        randomPos = new(0, 0);
+        return false;
     }
 
     private bool CheckBuildingDistance(Vector2 position)

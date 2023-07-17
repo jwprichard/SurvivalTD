@@ -14,6 +14,8 @@ public class UIManager : MonoBehaviour
     [Space]
     [SerializeField] private TMP_Text TextTimer;
 
+    [SerializeField] private bool EnableTimer = true;
+
     private TimerState CurrentState;
 
     private SimpleTimer PrepTimer;
@@ -46,6 +48,7 @@ public class UIManager : MonoBehaviour
 
     private void StartTimer(GameState state)
     {
+        if (!EnableTimer) return;
         if (state.Equals(GameState.Preparation))
         {
             TextTimer.enabled = true;

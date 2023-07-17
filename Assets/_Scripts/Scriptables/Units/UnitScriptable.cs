@@ -24,6 +24,7 @@ namespace Assets.Scriptables.Units
         public float Speed;
         public float Range;
         public float Damage;
+        public float AttackSpeed;
     }
     [Serializable]
     public enum UnitType

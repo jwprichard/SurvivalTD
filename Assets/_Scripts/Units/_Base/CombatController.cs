@@ -16,22 +16,56 @@ namespace Assets.Units
         {
             Unit = GetComponent<Unit>();
             Timer = gameObject.AddComponent<AttackTimer>();
+            Timer.OnTimerElapsed += Attack;
         }
 
-        public virtual void Update()
+        public virtual void Update() 
+        {
+            ActionPerFrame();
+        }
+
+        //Called every frame by update
+        public virtual void ActionPerFrame()
         {
             // If the unit's combat activity is disabled.
             if (!Unit.Active) return;
-            FindTarget();
             CheckStats();
+            FindTarget();
+            CheckTargetInRange();
         }
 
         public void CheckStats()
         {
-            if (Unit.Stats.Health  <= 0)
+            if (Unit.Stats.Health <= 0)
             {
                 Destroy(gameObject);
             }
+        }
+
+        public virtual void FindTarget()
+        {
+            if (Unit.Target != null) return;
+
+            Transform target = GameObjectUtilities.FindTransformInDistance(transform, (int)Unit.Scriptable.targetUnit, 300);
+
+            Unit.SetTarget(target);
+
+        }
+
+        private void CheckTargetInRange()
+        {
+            if (Unit.Target == null) return;
+
+            if (!(Vector2.Distance(Unit.Target.position, transform.position) < Unit.Stats.Range)) return;
+
+            HandleCombat();
+        }
+
+        private void HandleCombat()
+        {
+            if (Timer.isRunning) return;
+
+            Timer.Init(Unit.Stats.AttackSpeed);
         }
 
         public virtual void TakeDamage(float damage)
@@ -42,15 +76,5 @@ namespace Assets.Units
         }
 
         public virtual void Attack() { }
-
-        public virtual void FindTarget()
-        {
-            Transform target = GameObjectUtilities.FindTransformInDistance(transform, (int)Unit.Scriptable.targetUnit, Unit.Stats.Range);
-
-            if (target != null)
-            {
-                Unit.SetTarget(target);
-            }
-        }
     }
 }

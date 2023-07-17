@@ -12,5 +12,7 @@ namespace Assets.Scriptables.Units
     public enum EnemyType
     {
         eye=0,
+        average = 1,
+        tanky = 2,
     }
 }
