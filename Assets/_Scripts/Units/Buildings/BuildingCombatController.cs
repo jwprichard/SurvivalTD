@@ -9,15 +9,9 @@ namespace Assets.Units
     {
         private ProjectileScriptable Ammunition;
 
-        public void Start()
-        {
-            Timer.Init(1, true);
-            Timer.OnTimerElapsed += Attack;
-        }
-
         public override void Attack()
         {
-            if (Unit.Target == null) return;
+            //if (Unit.Target == null) return;
             CreateAmmo();
         }
 

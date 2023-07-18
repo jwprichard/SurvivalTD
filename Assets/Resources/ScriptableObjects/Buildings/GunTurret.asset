@@ -19,7 +19,8 @@ MonoBehaviour:
     Health: 100
     Speed: 0
     Range: 50
-    Damage: 0
+    Damage: 10
+    AttackSpeed: 1
   prefab: {fileID: 846520477794257371, guid: be1424adf48b0014e8d282ce8d2d9fa1, type: 3}
   DefaultAmmo: {fileID: 11400000, guid: f35d7be0fa41b94498c57eb92dc6992a, type: 2}
   buildingType: 1

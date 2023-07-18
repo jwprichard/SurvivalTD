@@ -10,6 +10,7 @@ public class BuildingManager : Singleton<BuildingManager>
 {
     [Header("Broadcasting On")]
     [SerializeField] private BuildingEventChannelSO _onBuild = default;
+    [SerializeField] private BuildingEventChannelSO _onBuildingDestroyed = default;
 
     [Header("Listening to")]
     [SerializeField] private GameStateEventChannelSO _onGameStateChange = default;
@@ -53,6 +54,7 @@ public class BuildingManager : Singleton<BuildingManager>
 
 
         BuildingGO.transform.position = tile.GetCenterPosition();
+        BuildingGO.transform.parent = transform;
 
         if (tile.GetUnit() != null)
         {

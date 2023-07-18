@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dbb6e1ea9f3ca6744af124e4b3041d7b, type: 3}
-  m_Name: Base
+  m_Name: TestTurret
   m_EditorClassIdentifier: 
-  name: Base
+  name: 
   unitType: 10
   targetUnit: 11
   _stats:
-    Health: 500
+    Health: 200
     Speed: 0
-    Range: 0
-    Damage: 0
-    AttackSpeed: 0
-  prefab: {fileID: 846520477794257371, guid: fdcf5dfdaecec6645a1d77848af99b07, type: 3}
-  DefaultAmmo: {fileID: 0}
-  buildingType: 0
+    Range: 50
+    Damage: 10
+    AttackSpeed: 2
+  prefab: {fileID: 846520477794257371, guid: 55547f33d43492f4a8f6d3a76c775993, type: 3}
+  DefaultAmmo: {fileID: 11400000, guid: f35d7be0fa41b94498c57eb92dc6992a, type: 2}
+  buildingType: 2

@@ -3,10 +3,10 @@ using UnityEngine;
 public class EnemyManager : Singleton<EnemyManager>
 {
     [Header("Broadcasting On")]
-    [SerializeField] private EnemyManagerStateECSO _onEnemyManagerStateChange = default;
+    //[SerializeField] private EnemyManagerStateECSO _onEnemyManagerStateChange = default;
 
     [Header("Listening To")]
-    [SerializeField] private EnemyDeathEventChannelSO _onEnemyDeath = default;
+    //[SerializeField] private EnemyDeathEventChannelSO _onEnemyDeath = default;
     [SerializeField] private GameStateEventChannelSO _onGameStateChange = default;
 
     private SpawnController[] spawnControllers = new SpawnController[1];
@@ -34,11 +34,12 @@ public class EnemyManager : Singleton<EnemyManager>
         spawnController.name = "SpawnController";
         spawnController.transform.parent = transform;
         spawnControllers[0] = spawnController.AddComponent<SpawnController>();
-        spawnControllers[0].Init(10, 2);
+        spawnControllers[0].Init(3, 15);
     }
 
     private void StartSpawners()
     {
-        foreach (SpawnController spawner in  spawnControllers)  spawner.ChangeState(SpawnState.Spawning);
+        Debug.Log("spawners started");
+        foreach (SpawnController spawner in  spawnControllers)  spawner.InitTimers();
     }
 }

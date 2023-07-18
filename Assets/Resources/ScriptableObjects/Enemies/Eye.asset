@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 41af99eacc4a8034fbf94edd1a79f88e, type: 3}
-  m_Name: Enemy
+  m_Name: Eye
   m_EditorClassIdentifier: 
-  name: 
+  name: Eye
   unitType: 11
   targetUnit: 10
   _stats:
-    Health: 100
-    Speed: 10
-    Range: 100
-    Damage: 0
+    Health: 30
+    Speed: 20
+    Range: 10
+    Damage: 10
+    AttackSpeed: 2
   prefab: {fileID: 7100547002139491140, guid: 02973fd4f5bf3cb4ca1149843d6d29a7, type: 3}
   enemyType: 0
-  SpawnCost: 5
+  SpawnCost: 3

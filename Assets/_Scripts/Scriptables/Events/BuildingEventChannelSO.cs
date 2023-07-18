@@ -11,6 +11,8 @@ public class BuildingEventChannelSO : ScriptableObject
 
     public UnityAction<BuildingType> OnBuildingChange = delegate { };
 
+    public UnityAction<BuildingType> OnBuildingDestroyed = delegate { };
+
     public void RaiseBuildInteractEvent()
     {
         OnBuildInteract.Invoke();
@@ -24,6 +26,11 @@ public class BuildingEventChannelSO : ScriptableObject
     public void RaiseBuildingChangeEvent(BuildingType building)
     {
         OnBuildingChange.Invoke(building);
+    }
+
+    public void RaiseOnBuildingDestroyed(BuildingType building)
+    {
+        OnBuildingDestroyed.Invoke(building);
     }
 }
 
