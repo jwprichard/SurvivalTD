@@ -10,6 +10,7 @@ public class BuildingManager : Singleton<BuildingManager>
 {
     [Header("Broadcasting On")]
     [SerializeField] private BuildingEventChannelSO _onBuild = default;
+    [SerializeField] private BuildingEventChannelSO _onBuildingDestroyed = default;
 
     [Header("Listening to")]
     [SerializeField] private GameStateEventChannelSO _onGameStateChange = default;

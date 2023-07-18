@@ -15,5 +15,6 @@ namespace Assets.Scriptables.Units
     {
         Base = 0,
         GunTurret = 1,
+        TestTurret = 2,
     }
 }

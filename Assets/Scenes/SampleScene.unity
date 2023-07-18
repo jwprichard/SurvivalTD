@@ -57613,6 +57613,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _onBuild: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
+  _onBuildingDestroyed: {fileID: 0}
   _onGameStateChange: {fileID: 11400000, guid: 94b990d6067e2e74e9de445d13718985, type: 2}
   _onBuildingEvent: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
   Building: 0
@@ -58052,6 +58053,7 @@ MonoBehaviour:
   _onBuildingEvent: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
   _onRoundStart: {fileID: 11400000, guid: 134a3255342a5284c9fd1a1a95993027, type: 2}
   _onBuildingBuilt: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
+  _onBuildingDestroyed: {fileID: 11400000, guid: f9368f1e713b0674db43b9aff3e70022, type: 2}
 --- !u!4 &2080591941
 Transform:
   m_ObjectHideFlags: 0

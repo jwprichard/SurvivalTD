@@ -13,4 +13,5 @@ public static class VariableManager
     public static int Height { get => _height; set => _height = value; }
 
     public static readonly float SpawnPointMultiplier = 1.2f;
+    public static readonly float SpawnPointIncrementConstant = 2f;
 }

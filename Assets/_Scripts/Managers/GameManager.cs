@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
     [Header("Listening to")]
     [SerializeField] private RoundTimerEventChannelSO _onRoundStart = default;
     [SerializeField] private BuildingEventChannelSO _onBuildingBuilt = default;
+    [SerializeField] private BuildingEventChannelSO _onBuildingDestroyed = default;
     //[SerializeField] private EnemyManagerStateECSO _onEnemyStateChange = default;
 
     public GameState State { get; private set; }
@@ -42,16 +43,15 @@ public class GameManager : Singleton<GameManager>
                 Debug.Log("Starting...");
                 HandleStarting();
                 break;
-            case GameState.Preparation:
-                Debug.Log("Preparation...");
-                HandlePreparation();
-                break;
+            //case GameState.Preparation:
+            //    Debug.Log("Preparation...");
+            //    HandlePreparation();
+            //    break;
             case GameState.Wave:
                 Debug.Log("Wave...");
                 break;
-            case GameState.Finish:
-                Debug.Log("Wave...");
-                HandleFinish();
+            case GameState.GameOver:
+                HandleGameOver();
                 break;
             default:
                 throw new ArgumentOutOfRangeException(nameof(State), newState, null);
@@ -62,7 +62,7 @@ public class GameManager : Singleton<GameManager>
     private void HandleBuildingBuilt(BuildingType buildingType)
     {
         if (!buildingType.Equals(BuildingType.Base)) return;
-        ChangeState(GameState.Preparation);
+        ChangeState(GameState.Wave);
     }
 
     //private void HandleEnemyStateChange(EnemyManagerState enemyState)
@@ -72,6 +72,13 @@ public class GameManager : Singleton<GameManager>
     //}
 
     public void HandleRoundStart(GameState gameState) => ChangeState(gameState);
+
+    private void HandleBuildingDestroyed(BuildingType buildingType)
+    {
+        if (!buildingType.Equals(BuildingType.Base)) return;
+
+        ChangeState(GameState.GameOver);
+    }
 
     // State Handlers
     private void HandleInitialise()
@@ -94,9 +101,9 @@ public class GameManager : Singleton<GameManager>
         // Pass
     }
 
-    private void HandleFinish()
+    private void HandleGameOver()
     {
-        //Nothing
+        Debug.Log("Game Over");
     }
 
 }
@@ -109,5 +116,5 @@ public enum GameState
     Preparation,
     Wave,
     Upgrade,
-    Finish,
+    GameOver,
 }
