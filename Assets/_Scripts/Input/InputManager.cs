@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum InteractionType { None = 0, Select, Build}
 
@@ -13,10 +14,24 @@ public class InputManager : Singleton<InputManager>
     [Space]
     public InteractionType currentInteractionType;
 
+    private bool IsOverUI;
+
     private void OnEnable()
     {
         _inputReader.InteractEvent += OnInteractionButtonPressed;
         currentInteractionType = InteractionType.Build;
+    }
+
+    public void Update()
+    {
+        if (EventSystem.current.IsPointerOverGameObject())
+        {
+            IsOverUI = true;
+        }
+        else
+        {
+            IsOverUI = false;
+        }
     }
 
     private void OnInteractionButtonPressed()
@@ -32,6 +47,11 @@ public class InputManager : Singleton<InputManager>
                 }
             case InteractionType.Build:
                 {
+                    if (IsOverUI)
+                    {
+                        currentInteractionType = InteractionType.Select; 
+                        break;
+                    }
                     _onBuildInteract.RaiseBuildInteractEvent();
                     break;
                 }
@@ -41,4 +61,5 @@ public class InputManager : Singleton<InputManager>
                 }
         }
     }
+
 }

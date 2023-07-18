@@ -32,5 +32,16 @@ public class BuildingEventChannelSO : ScriptableObject
     {
         OnBuildingDestroyed.Invoke(building);
     }
+
+    public void RaiseBuildingChangeEvent_Turret()
+    {
+        Debug.Log("Clicked");
+        RaiseBuildingChangeEvent(BuildingType.GunTurret);
+    }
+
+    public void RaiseBuildingChangeEvent_TestTurret(Event e)
+    {
+        RaiseBuildingChangeEvent(BuildingType.TestTurret);
+    }
 }
 
