@@ -9,7 +9,10 @@ public class InputManager : Singleton<InputManager>
 
     [Header("Broadcasting on")]
     [SerializeField] private BuildingEventChannelSO _onBuildInteract = default;
-    [SerializeField] private SelectEventChannelSOcs _onSelect = default;
+    [SerializeField] private InputManagerEventChannelSO _onSelect = default;
+
+    [Header("ListeningOn")]
+    [SerializeField] private InputManagerEventChannelSO _onInteractionTypeChange = default;
 
     [Space]
     public InteractionType currentInteractionType;
@@ -19,6 +22,9 @@ public class InputManager : Singleton<InputManager>
     private void OnEnable()
     {
         _inputReader.InteractEvent += OnInteractionButtonPressed;
+        _inputReader.CancelEvent += OnCancelButtonPressed;
+        _onInteractionTypeChange.OnInteractionTypeChangeRaised += OnInteractionTypeChanged;
+
         currentInteractionType = InteractionType.Build;
     }
 
@@ -34,6 +40,8 @@ public class InputManager : Singleton<InputManager>
         }
     }
 
+    private void OnInteractionTypeChanged(InteractionType interactionType) => currentInteractionType = interactionType;
+
     private void OnInteractionButtonPressed()
     {
 
@@ -47,11 +55,7 @@ public class InputManager : Singleton<InputManager>
                 }
             case InteractionType.Build:
                 {
-                    if (IsOverUI)
-                    {
-                        currentInteractionType = InteractionType.Select; 
-                        break;
-                    }
+                    if (IsOverUI) break;
                     _onBuildInteract.RaiseBuildInteractEvent();
                     break;
                 }
@@ -60,6 +64,11 @@ public class InputManager : Singleton<InputManager>
                     throw new System.ArgumentOutOfRangeException();
                 }
         }
+    }
+
+    private void OnCancelButtonPressed()
+    {
+        currentInteractionType = InteractionType.None;
     }
 
 }

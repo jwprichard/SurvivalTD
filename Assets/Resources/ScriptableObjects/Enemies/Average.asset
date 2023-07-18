@@ -22,5 +22,5 @@ MonoBehaviour:
     Damage: 20
     AttackSpeed: 1
   prefab: {fileID: 7100547002139491140, guid: b77c087100abbe24b815c0a22ca98c1a, type: 3}
-  enemyType: 1
+  enemyType: 5
   SpawnCost: 5

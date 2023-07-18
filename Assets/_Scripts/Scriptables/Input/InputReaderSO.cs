@@ -9,7 +9,7 @@ public class InputReaderSO : ScriptableObject, GameInput.IGameplayActions
     public event UnityAction InteractEvent = delegate { };
     public event UnityAction pauseEvent = delegate { };
 
-    public event UnityAction MenuCloseEvent = delegate { };
+    public event UnityAction CancelEvent = delegate { };
 
     private GameInput _gameInput;
 
@@ -35,7 +35,7 @@ public class InputReaderSO : ScriptableObject, GameInput.IGameplayActions
 
     public void OnCancel(InputAction.CallbackContext context)
     {
-        if (context.phase == InputActionPhase.Performed) MenuCloseEvent.Invoke();
+        if (context.phase == InputActionPhase.Performed) CancelEvent.Invoke();
     }
 
     public void OnInteract(InputAction.CallbackContext context)

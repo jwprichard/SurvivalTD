@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using Assets.Scriptables.Units;
+using System;
 
 [CreateAssetMenu(menuName = "Events/Buildings/Building Event Channel")]
 public class BuildingEventChannelSO : ScriptableObject
@@ -23,6 +24,12 @@ public class BuildingEventChannelSO : ScriptableObject
         OnBuild.Invoke(building);
     }
 
+    public void RaiseBuildingChangeEvent(string building)
+    {
+        Enum.TryParse(building, out BuildingType buildingType);
+        OnBuildingChange.Invoke(buildingType);
+    }
+
     public void RaiseBuildingChangeEvent(BuildingType building)
     {
         OnBuildingChange.Invoke(building);
@@ -31,17 +38,6 @@ public class BuildingEventChannelSO : ScriptableObject
     public void RaiseOnBuildingDestroyed(BuildingType building)
     {
         OnBuildingDestroyed.Invoke(building);
-    }
-
-    public void RaiseBuildingChangeEvent_Turret()
-    {
-        Debug.Log("Clicked");
-        RaiseBuildingChangeEvent(BuildingType.GunTurret);
-    }
-
-    public void RaiseBuildingChangeEvent_TestTurret(Event e)
-    {
-        RaiseBuildingChangeEvent(BuildingType.TestTurret);
     }
 }
 

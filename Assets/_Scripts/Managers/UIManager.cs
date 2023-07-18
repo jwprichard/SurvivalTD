@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 using Assets.Scripts.Utilities;
-using System.Runtime.CompilerServices;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
@@ -15,6 +15,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TMP_Text TextTimer;
 
     [SerializeField] private bool EnableTimer = true;
+
+
 
     private TimerState CurrentState;
 
