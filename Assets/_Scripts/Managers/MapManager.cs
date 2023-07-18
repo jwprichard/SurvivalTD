@@ -19,7 +19,7 @@ public class MapManager : Singleton<MapManager>
         VariableManager.Height = 10;
         VariableManager.Width = 10;
         if (state != GameState.Initialise) return;
-        _mapGrid = new(VariableManager.Width, VariableManager.Height, 4, new(-20, -20, 0), (Grid<MapTile> g, int x, int y) => new MapTile(g, x, y), true);
+        _mapGrid = new(transform, VariableManager.Width, VariableManager.Height, 4, new(-20, -20, 0), (Grid<MapTile> g, int x, int y) => new MapTile(g, x, y), true);
     }
 
 }

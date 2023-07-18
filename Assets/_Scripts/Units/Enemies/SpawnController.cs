@@ -78,6 +78,7 @@ public class SpawnController : MonoBehaviour
         {
             Enemy e = enemy.GetComponent<Enemy>();
             Enemies.Add(e);
+            e.transform.parent = transform;
             CurrentSpawnPoints -= e.Scriptable.SpawnCost;
             enemy.transform.position = new(randomPos.x * UnityEngine.Random.Range(1, 1.1f), randomPos.y * UnityEngine.Random.Range(1, 1.1f));
         }

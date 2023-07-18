@@ -54,6 +54,7 @@ public class BuildingManager : Singleton<BuildingManager>
 
 
         BuildingGO.transform.position = tile.GetCenterPosition();
+        BuildingGO.transform.parent = transform;
 
         if (tile.GetUnit() != null)
         {
